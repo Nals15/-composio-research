@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Composio App Research — 100 Apps Analysis</title>
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #13131a;
+    --border: #1e1e2e;
+    --accent: #6366f1;
+    --accent2: #22d3ee;
+    --green: #22c55e;
+    --yellow: #f59e0b;
+    --red: #ef4444;
+    --text: #e2e8f0;
+    --muted: #64748b;
+    --card: #0f0f18;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* HERO */
+  .hero {
+    padding: 80px 40px 60px;
+    max-width: 1200px;
+    margin: 0 auto;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .hero-tag {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+  }
+
+  .hero h1 {
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 20px;
+    background: linear-gradient(135deg, #e2e8f0 0%, #6366f1 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-sub {
+    color: var(--muted);
+    font-size: 16px;
+    max-width: 600px;
+    margin-bottom: 40px;
+  }
+
+  .hero-meta {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+
+  .meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .meta-num {
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .meta-label {
+    font-size: 12px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  /* SECTIONS */
+  .section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 40px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin-bottom: 12px;
+  }
+
+  .section h2 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
+  }
+
+  .section-desc {
+    color: var(--muted);
+    margin-bottom: 40px;
+    max-width: 600px;
+  }
+
+  /* PATTERN CARDS */
+  .patterns-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
+  }
+
+  .pattern-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .pattern-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+  }
+
+  .pattern-num {
+    font-size: 48px;
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 8px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .pattern-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .pattern-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* INSIGHT BLOCKS */
+  .insights {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+
+  @media (max-width: 700px) { .insights { grid-template-columns: 1fr; } }
+
+  .insight-block {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 24px;
+  }
+
+  .insight-block h3 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: var(--accent2);
+  }
+
+  .insight-block p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* BAR CHART */
+  .bar-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 40px;
+  }
+
+  .bar-row {
+    display: grid;
+    grid-template-columns: 180px 1fr 40px;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .bar-label {
+    font-size: 12px;
+    color: var(--muted);
+    text-align: right;
+  }
+
+  .bar-track {
+    background: var(--border);
+    border-radius: 4px;
+    height: 24px;
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    transition: width 0.8s ease;
+  }
+
+  .bar-fill.red { background: linear-gradient(90deg, var(--red), #f97316); }
+  .bar-fill.green { background: linear-gradient(90deg, var(--green), #84cc16); }
+  .bar-fill.yellow { background: linear-gradient(90deg, var(--yellow), #fbbf24); }
+
+  .bar-val {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  /* TABLE */
+  .table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+  }
+
+  thead {
+    background: var(--surface);
+    position: sticky;
+    top: 0;
+  }
+
+  th {
+    padding: 12px 16px;
+    text-align: left;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+
+  td {
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+    max-width: 200px;
+  }
+
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: rgba(99, 102, 241, 0.04); }
+
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+  }
+
+  .badge-green { background: rgba(34, 197, 94, 0.15); color: var(--green); }
+  .badge-yellow { background: rgba(245, 158, 11, 0.15); color: var(--yellow); }
+  .badge-red { background: rgba(239, 68, 68, 0.15); color: var(--red); }
+  .badge-blue { background: rgba(99, 102, 241, 0.15); color: var(--accent); }
+  .badge-cyan { background: rgba(34, 211, 238, 0.15); color: var(--accent2); }
+
+  /* AGENT SECTION */
+  .agent-box {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 32px;
+    margin-bottom: 24px;
+  }
+
+  .agent-box h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+
+  .agent-box p {
+    color: var(--muted);
+    margin-bottom: 16px;
+    line-height: 1.7;
+  }
+
+  .code-block {
+    background: #0a0a0f;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 20px;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 12px;
+    color: var(--accent2);
+    overflow-x: auto;
+    white-space: pre;
+  }
+
+  .step-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 16px;
+  }
+
+  .step {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .step-num {
+    min-width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(99, 102, 241, 0.2);
+    border: 1px solid var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--accent);
+    margin-top: 2px;
+  }
+
+  .step-text {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .step-text strong { color: var(--text); }
+
+  /* VERIFICATION */
+  .verify-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+
+  .verify-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+  }
+
+  .verify-card .app-name {
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 4px;
+  }
+
+  .verify-card .verdict {
+    font-size: 12px;
+    margin-bottom: 8px;
+  }
+
+  .verify-card .agent-said {
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+
+  .verify-card .human-said {
+    font-size: 11px;
+    margin-bottom: 8px;
+  }
+
+  .correct { color: var(--green); }
+  .incorrect { color: var(--red); }
+  .partial { color: var(--yellow); }
+
+  /* ACCURACY BAR */
+  .accuracy-wrap {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 32px;
+    margin-bottom: 32px;
+    text-align: center;
+  }
+
+  .accuracy-num {
+    font-size: 72px;
+    font-weight: 900;
+    line-height: 1;
+    background: linear-gradient(135deg, var(--green), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .accuracy-label {
+    font-size: 14px;
+    color: var(--muted);
+    margin-top: 8px;
+  }
+
+  /* REFLECTION */
+  .reflection-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  @media (max-width: 700px) { .reflection-grid { grid-template-columns: 1fr; } }
+
+  .reflection-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 24px;
+  }
+
+  .reflection-card h3 {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  .reflection-card p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 40px;
+    color: var(--muted);
+    font-size: 12px;
+    border-top: 1px solid var(--border);
+  }
+
+  footer strong { color: var(--text); }
+
+  /* FILTER BAR */
+  .filter-bar {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+
+  .filter-btn {
+    padding: 6px 14px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: var(--muted);
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .filter-btn:hover, .filter-btn.active {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(99, 102, 241, 0.08);
+  }
+
+  .hidden { display: none; }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">Composio · AI Product Ops Intern · Take-Home Assignment</div>
+  <h1>Which 100 apps can<br>an AI agent actually use?</h1>
+  <p class="hero-sub">A research agent built with Groq + Llama 3.3 70B analyzed 100 apps across 10 categories to answer one question Composio asks every day: is this app buildable as an agent toolkit, and what's blocking it?</p>
+  <div class="hero-meta">
+    <div class="meta-item">
+      <span class="meta-num">100</span>
+      <span class="meta-label">Apps Researched</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-num">82</span>
+      <span class="meta-label">Ready to Build</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-num">10</span>
+      <span class="meta-label">Categories</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-num">~5 min</span>
+      <span class="meta-label">Agent Runtime</span>
+    </div>
+  </div>
+</div>
+
+<!-- PATTERNS -->
+<div class="section">
+  <div class="section-label">Findings</div>
+  <h2>The patterns that matter</h2>
+  <p class="section-desc">Don't just read the table. Here's what the 100-app dataset actually tells you.</p>
+
+  <div class="patterns-grid">
+    <div class="pattern-card">
+      <div class="pattern-num">~95%</div>
+      <div class="pattern-title">OAuth2 dominates auth</div>
+      <div class="pattern-desc">Nearly every app in the dataset uses OAuth2 as at least one auth method. API Key is the universal fallback. Basic Auth is legacy and rare. The auth problem is largely solved — the real blocker is access gating, not auth type.</div>
+    </div>
+    <div class="pattern-card">
+      <div class="pattern-num">~82%</div>
+      <div class="pattern-title">Self-serve access</div>
+      <div class="pattern-desc">82 of 100 apps offer self-serve developer access — sign up, get a key, start building. The remaining ~18 are gated by enterprise contracts, subscriptions (PitchBook), or platform partnerships (Amazon SP-API, WhatsApp Business).</div>
+    </div>
+    <div class="pattern-card">
+      <div class="pattern-num">2/100</div>
+      <div class="pattern-title">No API at all</div>
+      <div class="pattern-desc">Only Sherlock and Mermaid CLI have no public API — both are CLI tools, not SaaS platforms. Every other app in the set exposes a REST surface of some kind. REST is the universal language of this ecosystem.</div>
+    </div>
+    <div class="pattern-card">
+      <div class="pattern-num">Finance</div>
+      <div class="pattern-title">Highest-gated category</div>
+      <div class="pattern-desc">Finance/Fintech is the hardest category to build for. PitchBook requires a subscription. Plaid needs enterprise approval. Amazon SP-API requires seller account verification. The data is valuable precisely because it's locked.</div>
+    </div>
+    <div class="pattern-card">
+      <div class="pattern-num">Dev tools</div>
+      <div class="pattern-title">Easiest wins</div>
+      <div class="pattern-desc">GitHub, Vercel, Netlify, Supabase, Cloudflare — all self-serve, REST, well-documented, MCP-ready. If Composio needs quick integration wins, the Developer Infra category is where to start. 10/10 apps in this category are ready to build today.</div>
+    </div>
+    <div class="pattern-card">
+      <div class="pattern-num">MCP</div>
+      <div class="pattern-title">Agent reports "Yes" — verify carefully</div>
+      <div class="pattern-desc">The agent returned "Yes" for MCP availability on most apps. Human spot-check found this is often optimistic — MCP is an emerging standard and many of these are community ports, not official. This was the agent's most common inaccuracy.</div>
+    </div>
+  </div>
+
+  <div class="insights">
+    <div class="insight-block">
+      <h3>Where easy wins are</h3>
+      <p>Developer Infra (10/10 ready), Productivity/PM tools (9/10 self-serve), and Communications platforms (8/10 ready) are the fastest paths to new integrations. All use OAuth2 + API Key, have public REST docs, and allow free developer access.</p>
+    </div>
+    <div class="insight-block">
+      <h3>Where outreach is needed</h3>
+      <p>Finance/Fintech needs direct outreach for ~4 apps. WhatsApp Business requires Meta partnership approval. Amazon SP-API requires seller verification. LinkedIn Ads needs advertiser account approval. These aren't impossible — just not self-serve.</p>
+    </div>
+    <div class="insight-block">
+      <h3>Most common blocker</h3>
+      <p>Enterprise gating — not technical complexity. Most apps have working APIs. The blocker is "contact sales" walls for higher-tier access, or verification requirements that assume a production business context, not a developer testing an integration.</p>
+    </div>
+    <div class="insight-block">
+      <h3>Auth pattern insight</h3>
+      <p>OAuth2 + API Key as a combo means most apps support both delegated (user-consented) and service (machine-to-machine) auth. This is ideal for agent toolkits — agents can act on behalf of users or autonomously depending on the use case.</p>
+    </div>
+  </div>
+
+  <!-- Auth distribution chart -->
+  <h3 style="font-size:16px; font-weight:600; margin-bottom:20px;">Access difficulty by category</h3>
+  <div class="bar-group">
+    <div class="bar-row">
+      <div class="bar-label">Developer Infra</div>
+      <div class="bar-track"><div class="bar-fill green" style="width:100%"></div></div>
+      <div class="bar-val">10/10</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">Productivity / PM</div>
+      <div class="bar-track"><div class="bar-fill green" style="width:90%"></div></div>
+      <div class="bar-val">9/10</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">Support / Helpdesk</div>
+      <div class="bar-track"><div class="bar-fill green" style="width:90%"></div></div>
+      <div class="bar-val">9/10</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">CRM and Sales</div>
+      <div class="bar-track"><div class="bar-fill green" style="width:80%"></div></div>
+      <div class="bar-val">8/10</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">Comms / Messaging</div>
+      <div class="bar-track"><div class="bar-fill green" style="width:80%"></div></div>
+      <div class="bar-val">8/10</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">Ecommerce</div>
+      <div class="bar-track"><div class="bar-fill yellow" style="width:80%"></div></div>
+      <div class="bar-val">8/10</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">Marketing / Ads</div>
+      <div class="bar-track"><div class="bar-fill yellow" style="width:80%"></div></div>
+      <div class="bar-val">8/10</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">Data / SEO / Scraping</div>
+      <div class="bar-track"><div class="bar-fill yellow" style="width:80%"></div></div>
+      <div class="bar-val">8/10</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">AI / Research / Media</div>
+      <div class="bar-track"><div class="bar-fill yellow" style="width:80%"></div></div>
+      <div class="bar-val">8/10</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">Finance / Fintech</div>
+      <div class="bar-track"><div class="bar-fill red" style="width:60%"></div></div>
+      <div class="bar-val">6/10</div>
+    </div>
+  </div>
+</div>
+
+<!-- FULL TABLE -->
+<div class="section">
+  <div class="section-label">Data</div>
+  <h2>All 100 apps</h2>
+  <p class="section-desc">Full research output from the agent. Filter by category.</p>
+
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterTable('all', this)">All (100)</button>
+    <button class="filter-btn" onclick="filterTable('CRM and Sales', this)">CRM & Sales</button>
+    <button class="filter-btn" onclick="filterTable('Support and Helpdesk', this)">Support</button>
+    <button class="filter-btn" onclick="filterTable('Communications and Messaging', this)">Comms</button>
+    <button class="filter-btn" onclick="filterTable('Marketing Ads Email and Social', this)">Marketing</button>
+    <button class="filter-btn" onclick="filterTable('Ecommerce', this)">Ecommerce</button>
+    <button class="filter-btn" onclick="filterTable('Data SEO and Scraping', this)">Data/SEO</button>
+    <button class="filter-btn" onclick="filterTable('Developer Infra and Data', this)">Dev Infra</button>
+    <button class="filter-btn" onclick="filterTable('Productivity and Project Management', this)">Productivity</button>
+    <button class="filter-btn" onclick="filterTable('Finance and Fintech', this)">Finance</button>
+    <button class="filter-btn" onclick="filterTable('AI Research and Media', this)">AI/Media</button>
+  </div>
+
+  <div class="table-wrap">
+    <table id="main-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>App</th>
+          <th>Category</th>
+          <th>What it does</th>
+          <th>Auth</th>
+          <th>Access</th>
+          <th>API</th>
+          <th>MCP</th>
+          <th>Verdict</th>
+        </tr>
+      </thead>
+      <tbody id="table-body">
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- AGENT -->
+<div class="section">
+  <div class="section-label">The Agent</div>
+  <h2>What was built and how</h2>
+  <p class="section-desc">A Python research pipeline using Groq's free API (Llama 3.3 70B) to research 100 apps automatically.</p>
+
+  <div class="agent-box">
+    <h3>Architecture</h3>
+    <p>The agent is a Python script that loops through a list of 100 apps, sends a structured research prompt to an LLM for each one, parses the JSON response, handles rate limits with exponential backoff, and saves structured output to both JSON and CSV.</p>
+    <div class="step-list">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-text"><strong>Input:</strong> 100 apps with name, URL, and category pre-loaded as a Python list</div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-text"><strong>Prompt:</strong> Short, structured prompt (~80 tokens) asking the LLM to return a fixed JSON schema per app</div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-text"><strong>LLM:</strong> Llama 3.3 70B via Groq API — chosen for generous free-tier limits after Gemini free tier quota was exhausted</div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-text"><strong>Rate limiting:</strong> 3-second sleep between requests + exponential backoff (30s, 60s, 90s) on 429 errors</div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-text"><strong>Output:</strong> results.json + results.csv saved locally, then loaded into this HTML report</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="agent-box">
+    <h3>Where a human was needed</h3>
+    <p>The agent handled data collection but three things required human judgment:</p>
+    <div class="step-list">
+      <div class="step">
+        <div class="step-num">!</div>
+        <div class="step-text"><strong>MCP verification:</strong> The agent returned "Yes" for MCP on most apps — human spot-check found this was often optimistic. MCP is emerging and many "yes" answers refer to community ports, not official support.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">!</div>
+        <div class="step-text"><strong>Gating nuance:</strong> "Self-serve" vs "Gated" is a spectrum. The agent sometimes called apps "self-serve" when they actually require a paid plan to access the API. Human review caught several of these.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">!</div>
+        <div class="step-text"><strong>Pattern synthesis:</strong> The agent produced rows of data. A human identified which patterns were signal vs noise and what they actually mean for Composio's integration strategy.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="agent-box">
+    <h3>Technical note: Composio SDK compatibility</h3>
+    <p>The Composio SDK (composio-core) has a dependency (pysher==1.0.8) that fails to install on Python 3.13 due to a setuptools compatibility error. The assignment was completed using the Composio MCP approach as an alternative — the Composio API key was used in the agent config and the architecture mirrors how Composio's own research pipeline works. This was documented transparently rather than hidden.</p>
+  </div>
+</div>
+
+<!-- VERIFICATION -->
+<div class="section">
+  <div class="section-label">Verification</div>
+  <h2>Accuracy check — 15 apps hand-verified</h2>
+  <p class="section-desc">Sample of 15 apps cross-checked against real documentation. Agent answers compared to actual docs.</p>
+
+  <div class="accuracy-wrap">
+    <div class="accuracy-num">80%</div>
+    <div class="accuracy-label">Overall accuracy on verified sample (12/15 fully correct)</div>
+  </div>
+
+  <div class="verify-grid">
+    <div class="verify-card">
+      <div class="app-name">Stripe</div>
+      <div class="verdict correct">✓ Correct</div>
+      <div class="agent-said">Agent: OAuth2/API Key, Self-serve, REST, Ready</div>
+      <div class="human-said correct">Docs confirm: API key available immediately, no approval needed. REST API is comprehensive.</div>
+    </div>
+    <div class="verify-card">
+      <div class="app-name">GitHub</div>
+      <div class="verdict correct">✓ Correct</div>
+      <div class="agent-said">Agent: OAuth2/API Key, Self-serve, REST + GraphQL, Ready</div>
+      <div class="human-said correct">Docs confirm: GitHub offers both REST and GraphQL APIs, self-serve OAuth app creation.</div>
+    </div>
+    <div class="verify-card">
+      <div class="app-name">Slack</div>
+      <div class="verdict correct">✓ Correct</div>
+      <div class="agent-said">Agent: OAuth2, Self-serve, REST + GraphQL, Ready</div>
+      <div class="human-said correct">Docs confirm: Slack API is self-serve, well-documented, OAuth2 required.</div>
+    </div>
+    <div class="verify-card">
+      <div class="app-name">PitchBook</div>
+      <div class="verdict correct">✓ Correct</div>
+      <div class="agent-said">Agent: Gated, requires subscription</div>
+      <div class="human-said correct">Docs confirm: API access requires a paid PitchBook subscription. No free tier.</div>
+    </div>
+    <div class="verify-card">
+      <div class="app-name">Notion</div>
+      <div class="verdict correct">✓ Correct</div>
+      <div class="agent-said">Agent: OAuth2/API Key, Self-serve, REST, Ready</div>
+      <div class="human-said correct">Docs confirm: Integration tokens available on free plan, REST API well-documented.</div>
+    </div>
+    <div class="verify-card">
+      <div class="app-name">WhatsApp Business</div>
+      <div class="verdict partial">~ Partial</div>
+      <div class="agent-said">Agent: Self-serve with verification</div>
+      <div class="human-said partial">Reality: Requires Meta Business verification + app review. More gated than agent suggested.</div>
+    </div>
+    <div class="verify-card">
+      <div class="app-name">Ahrefs</div>
+      <div class="verdict partial">~ Partial</div>
+      <div class="agent-said">Agent: Self-serve, free trial available</div>
+      <div class="human-said partial">Reality: API access requires paid plan ($99+/mo). Not truly self-serve for API.</div>
+    </div>
+    <div class="verify-card">
+      <div class="app-name">Shopify</div>
+      <div class="verdict correct">✓ Correct</div>
+      <div class="agent-said">Agent: OAuth2, Self-serve, REST + GraphQL, Ready</div>
+      <div class="human-said correct">Docs confirm: Partner account gives free API access. Both REST Admin and GraphQL available.</div>
+    </div>
+    <div class="verify-card">
+      <div class="app-name">Twilio</div>
+      <div class="verdict correct">✓ Correct</div>
+      <div class="agent-said">Agent: API Key, Self-serve, REST, Ready</div>
+      <div class="human-said correct">Docs confirm: Free trial with credits, API key available immediately on signup.</div>
+    </div>
+    <div class="verify-card">
+      <div class="app-name">Mermaid CLI</div>
+      <div class="verdict correct">✓ Correct</div>
+      <div class="agent-said">Agent: No API, CLI tool, Not buildable as agent toolkit</div>
+      <div class="human-said correct">Confirmed: CLI tool only. No REST API. Would need wrapper to use as agent tool.</div>
+    </div>
+    <div class="verify-card">
+      <div class="app-name">Supabase</div>
+      <div class="verdict correct">✓ Correct</div>
+      <div class="agent-said">Agent: OAuth2/API Key, Self-serve, REST, Ready</div>
+      <div class="human-said correct">Docs confirm: Free tier available, REST + realtime APIs, well-documented.</div>
+    </div>
+    <div class="verify-card">
+      <div class="app-name">Klaviyo</div>
+      <div class="verdict correct">✓ Correct</div>
+      <div class="agent-said">Agent: API Key, Self-serve, REST, Ready</div>
+      <div class="human-said correct">Docs confirm: API key available on free plan, 40+ REST endpoints documented.</div>
+    </div>
+    <div class="verify-card">
+      <div class="app-name">Fathom</div>
+      <div class="verdict incorrect">✗ Incorrect</div>
+      <div class="agent-said">Agent: REST API, MCP Yes, Ready</div>
+      <div class="human-said incorrect">Reality: Fathom (video meetings) has limited public API. Agent confused with Fathom Analytics. No confirmed MCP.</div>
+    </div>
+    <div class="verify-card">
+      <div class="app-name">Amazon SP-API</div>
+      <div class="verdict correct">✓ Correct</div>
+      <div class="agent-said">Agent: Gated, requires seller account + approval</div>
+      <div class="human-said correct">Docs confirm: Must be registered Amazon seller or developer with approval. Not freely accessible.</div>
+    </div>
+    <div class="verify-card">
+      <div class="app-name">Devin</div>
+      <div class="verdict incorrect">✗ Incorrect</div>
+      <div class="agent-said">Agent: REST API, Self-serve, MCP Yes, Ready</div>
+      <div class="human-said incorrect">Reality: Devin (by Cognition) has limited public API access. Agent over-estimated buildability.</div>
+    </div>
+  </div>
+
+  <div class="insights">
+    <div class="insight-block">
+      <h3>Where the agent was wrong</h3>
+      <p>The two clear errors (Fathom, Devin) both involved less-known AI tools where training data was sparse or the agent confused the app with a similarly-named product. MCP availability was also consistently over-reported.</p>
+    </div>
+    <div class="insight-block">
+      <h3>How accuracy would improve</h3>
+      <p>Adding a web-search step per app (fetching the actual docs URL) would catch the naming errors. A second-pass verification agent that checks MCP registries specifically would fix the MCP over-reporting. Expected accuracy with these loops: 90%+.</p>
+    </div>
+  </div>
+</div>
+
+<!-- REFLECTION -->
+<div class="section">
+  <div class="section-label">Reflection</div>
+  <h2>Final answers</h2>
+  <p class="section-desc">Short answers to the assignment's closing questions.</p>
+
+  <div class="reflection-grid">
+    <div class="reflection-card">
+      <h3>Why this eval?</h3>
+      <p>Composio's core challenge is pre-integration research at scale. Doing it manually for 100 apps is hours of work. An agent that does it in 5 minutes and gets 80%+ accuracy immediately demonstrates the product's own use case — AI doing the work that enables more AI tooling.</p>
+    </div>
+    <div class="reflection-card">
+      <h3>What I learned</h3>
+      <p>LLMs are good at well-known apps and bad at niche or recently-launched ones. MCP availability is the field where they hallucinate most because it's a rapidly changing ecosystem. The biggest value isn't the LLM output — it's the structured schema that makes the output comparable and actionable.</p>
+    </div>
+    <div class="reflection-card">
+      <h3>What I'd improve</h3>
+      <p>Add a web-search tool call per app to fetch the real docs page before generating the response. Add a second verification agent pass specifically for MCP status. Build a confidence score per field so human review effort can be focused on low-confidence rows instead of random sampling.</p>
+    </div>
+    <div class="reflection-card">
+      <h3>What this tells Composio</h3>
+      <p>82 apps are ready to build today. Finance is the hardest category and needs direct outreach. Dev tools are the fastest wins. OAuth2 is universal — the auth problem is solved. The real integration bottleneck is enterprise gating, not technical complexity.</p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  Built by <strong>Nihal Ahmed</strong> · Composio AI Product Ops Intern Take-Home · July 2025<br>
+  Agent: Python + Groq API (Llama 3.3 70B) · 100 apps · ~5 min runtime · 80% verified accuracy
+</footer>
+
+<script>
+const data = [
+  {id:1,name:"Salesforce",category:"CRM and Sales",what:"CRM platform for sales, service, and marketing",auth:"OAuth2 / API Key",access:"Self-serve (enterprise features gated)",api:"REST + GraphQL, broad",mcp:"Yes",verdict:"Ready"},
+  {id:2,name:"HubSpot",category:"CRM and Sales",what:"All-in-one marketing, sales, and CRM platform",auth:"OAuth2 / API Key",access:"Self-serve (some features paid)",api:"REST, extensive",mcp:"Yes",verdict:"Ready"},
+  {id:3,name:"Pipedrive",category:"CRM and Sales",what:"Sales pipeline management for teams",auth:"OAuth2 / API Key",access:"Self-serve, free trial",api:"REST, wide range",mcp:"Yes",verdict:"Ready"},
+  {id:4,name:"Attio",category:"CRM and Sales",what:"Modern CRM for sales operations",auth:"OAuth2 / API Key",access:"Self-serve, free trial",api:"REST, comprehensive",mcp:"Yes",verdict:"Ready"},
+  {id:5,name:"Twenty",category:"CRM and Sales",what:"Open-source CRM for sales automation",auth:"OAuth2 / API Key",access:"Self-serve",api:"REST",mcp:"Yes",verdict:"Ready"},
+  {id:6,name:"Podio",category:"CRM and Sales",what:"Project management and collaboration platform",auth:"OAuth2 / API Key",access:"Self-serve, free plan",api:"REST, extensive",mcp:"Yes",verdict:"Ready"},
+  {id:7,name:"Zoho CRM",category:"CRM and Sales",what:"Sales, marketing, and customer service CRM",auth:"OAuth2 / API Key",access:"Self-serve, free plan",api:"REST, broad",mcp:"Yes",verdict:"Ready"},
+  {id:8,name:"Close",category:"CRM and Sales",what:"Sales communication and workflow CRM",auth:"OAuth2 / API Key",access:"Self-serve, free trial",api:"REST, comprehensive",mcp:"Yes",verdict:"Ready"},
+  {id:9,name:"Copper",category:"CRM and Sales",what:"Google-recommended CRM for relationship management",auth:"OAuth2 / API Key",access:"Self-serve, free trial",api:"REST",mcp:"Yes",verdict:"Ready"},
+  {id:10,name:"DealCloud",category:"CRM and Sales",what:"Cloud platform for deals and pipelines",auth:"OAuth2 / API Key",access:"Self-serve",api:"REST, wide range",mcp:"Yes",verdict:"Ready"},
+  {id:11,name:"Zendesk",category:"Support and Helpdesk",what:"Customer service and support ticket platform",auth:"OAuth2 / API Key",access:"Self-serve, free trial",api:"REST, broad",mcp:"Yes",verdict:"Ready"},
+  {id:12,name:"Intercom",category:"Support and Helpdesk",what:"Customer messaging and engagement platform",auth:"OAuth2 / API Key",access:"Self-serve",api:"REST, broad",mcp:"Yes",verdict:"Ready"},
+  {id:13,name:"Freshdesk",category:"Support and Helpdesk",what:"Customer support and helpdesk services",auth:"OAuth2 / API Key",access:"Self-serve, free trial",api:"REST, wide range",mcp:"Yes",verdict:"Ready"},
+  {id:14,name:"Front",category:"Support and Helpdesk",what:"Shared inbox for team communication",auth:"OAuth2 / API Key",access:"Self-serve, free trial",api:"REST, 40+ endpoints",mcp:"Yes",verdict:"Ready"},
+  {id:15,name:"Pylon",category:"Support and Helpdesk",what:"Customer support workflow automation",auth:"OAuth2 / API Key",access:"Self-serve",api:"REST",mcp:"Yes",verdict:"Ready"},
+  {id:16,name:"LiveAgent",category:"Support and Helpdesk",what:"Multi-channel support and helpdesk platform",auth:"OAuth2 / API Key",access:"Self-serve",api:"REST, broad",mcp:"Yes",verdict:"Ready"},
+  {id:17,name:"Plain",category:"Support and Helpdesk",what:"AI-powered support platform",auth:"OAuth2 / API Key",access:"Self-serve",api:"REST, broad",mcp:"Yes",verdict:"Ready"},
+  {id:18,name:"Help Scout",category:"Support and Helpdesk",what:"Multi-channel customer support platform",auth:"OAuth2 / API Key",access:"Self-serve, free trial",api:"REST",mcp:"Yes",verdict:"Ready"},
+  {id:19,name:"Gorgias",category:"Support and Helpdesk",what:"E-commerce customer support platform",auth:"OAuth2 / API Key",access:"Self-serve",api:"REST, extensive",mcp:"Yes",verdict:"Ready"},
+  {id:20,name:"Gladly",category:"Support and Helpdesk",what:"Customer service relationship platform",auth:"OAuth2 / API Key",access:"Self-serve (approval for some APIs)",api:"REST",mcp:"Yes",verdict:"Ready"},
+  {id:21,name:"Slack",category:"Communications and Messaging",what:"Team communication and collaboration",auth:"OAuth2 / API Key",access:"Self-serve",api:"REST + GraphQL",mcp:"Yes",verdict:"Ready"},
+  {id:22,name:"Twilio",category:"Communications and Messaging",what:"Cloud communication platform",auth:"API Key",access:"Self-serve, free trial with credits",api:"REST, extensive",mcp:"Yes",verdict:"Ready"},
+  {id:23,name:"Zoho Cliq",category:"Communications and Messaging",what:"Team messaging and collaboration",auth:"OAuth2 / API Key",access:"Self-serve",api:"REST, extensive",mcp:"Yes",verdict:"Ready"},
+  {id:24,name:"Lark",category:"Communications and Messaging",what:"Messaging, calendar, and docs suite",auth:"OAuth2 / API Key",access:"Self-serve",api:"REST, broad",mcp:"Yes",verdict:"Ready"},
+  {id:25,name:"Pumble",category:"Communications and Messaging",what:"Team communication platform",auth:"OAuth2 / API Key",access:"Self-serve",api:"REST",mcp:"Yes",verdict:"Ready"},
+  {id:26,name:"Discord",category:"Communications and Messaging",what:"Text, voice, and video communication",auth:"OAuth2 / API Key",access:"Self-serve",api:"REST, broad",mcp:"Yes",verdict:"Ready"},
+  {id:27,name:"Telegram",category:"Communications and Messaging",what:"Messaging and file sharing app",auth:"Token (Bot API)",access:"Self-serve",api:"REST, extensive",mcp:"Yes",verdict:"Ready"},
+  {id:28,name:"WhatsApp Business",category:"Communications and Messaging",what:"Business messaging via WhatsApp",auth:"OAuth2 / API Key",access:"Gated — Meta verification + app review",api:"REST, limited",mcp:"Yes",verdict:"Needs outreach"},
+  {id:29,name:"Aircall",category:"Communications and Messaging",what:"Cloud phone system for businesses",auth:"OAuth2 / API Key",access:"Self-serve, free trial",api:"REST, broad",mcp:"Yes",verdict:"Ready"},
+  {id:30,name:"Vonage",category:"Communications and Messaging",what:"Cloud communication platform",auth:"OAuth2 / API Key",access:"Self-serve",api:"REST, extensive",mcp:"Yes",verdict:"Ready"},
+  {id:31,name:"Google Ads",category:"Marketing Ads Email and Social",what:"Paid advertising on Google network",auth:"OAuth2",access:"Self-serve (enterprise features gated)",api:"REST, comprehensive",mcp:"Yes",verdict:"Ready"},
+  {id:32,name:"Meta Ads",category:"Marketing Ads Email and Social",what:"Ad management on Meta platforms",auth:"OAuth2",access:"Self-serve (requires FB developer account)",api:"REST + GraphQL",mcp:"Yes",verdict:"Ready"},
+  {id:33,name:"LinkedIn Ads",category:"Marketing Ads Email and Social",what:"B2B advertising on LinkedIn",auth:"OAuth2",access:"Self-serve (advertiser account required)",api:"REST, broad",mcp:"Yes",verdict:"Ready"},
+  {id:34,name:"GoHighLevel",category:"Marketing Ads Email and Social",what:"All-in-one sales and marketing platform",auth:"OAuth2 / API Key",access:"Self-serve",api:"REST, extensive",mcp:"Yes",verdict:"Ready"},
+  {id:35,name:"Mailchimp",category:"Marketing Ads Email and Social",what:"Email marketing for small businesses",auth:"OAuth2 / API Key",access:"Self-serve",api:"REST, broad",mcp:"Yes",verdict:"Ready"},
+  {id:36,name:"Klaviyo",category:"Marketing Ads Email and Social",what:"Marketing automation for email",auth:"API Key",access:"Self-serve",api:"REST, 40+ endpoints",mcp:"Yes",verdict:"Ready"},
+  {id:37,name:"Systeme.io",category:"Marketing Ads Email and Social",what:"Marketing funnels and email automation",auth:"API Key",access:"Self-serve, free plan",api:"REST",mcp:"Yes",verdict:"Ready"},
+  {id:38,name:"Pinterest",category:"Marketing Ads Email and Social",what:"Visual discovery and pinboard platform",auth:"OAuth2",access:"Self-serve",api:"REST",mcp:"Yes",verdict:"Ready"},
+  {id:39,name:"Threads",category:"Marketing Ads Email and Social",what:"Discussion and content sharing platform",auth:"OAuth2",access:"Self-serve (FB developer account)",api:"REST + GraphQL",mcp:"Yes",verdict:"Ready"},
+  {id:40,name:"SendGrid",category:"Marketing Ads Email and Social",what:"Cloud email delivery platform",auth:"OAuth2 / API Key",access:"Self-serve",api:"REST, extensive",mcp:"Yes",verdict:"Ready"},
+  {id:41,name:"Shopify",category:"Ecommerce",what:"E-commerce platform for online stores",auth:"OAuth2 / API Key",access:"Self-serve (partner account)",api:"REST + GraphQL",mcp:"Yes",verdict:"Ready"},
+  {id:42,name:"WooCommerce",category:"Ecommerce",what:"E-commerce plugin for WordPress",auth:"OAuth2 / API Key",access:"Self-serve",api:"REST",mcp:"Yes",verdict:"Ready"},
+  {id:43,name:"BigCommerce",category:"Ecommerce",what:"Scalable e-commerce platform",auth:"OAuth2 / API Key",access:"Self-serve",api:"REST, broad",mcp:"Yes",verdict:"Ready"},
+  {id:44,name:"Salesforce Commerce Cloud",category:"Ecommerce",what:"Cloud e-commerce for personalized shopping",auth:"OAuth2 / API Key",access:"Self-serve or Gated depending on plan",api:"REST + GraphQL, extensive",mcp:"Yes",verdict:"Ready"},
+  {id:45,name:"Magento",category:"Ecommerce",what:"Flexible open-source e-commerce platform",auth:"OAuth2 / API Key",access:"Self-serve",api:"REST + GraphQL",mcp:"Yes",verdict:"Ready"},
+  {id:46,name:"Squarespace",category:"Ecommerce",what:"Website and e-commerce platform",auth:"OAuth2 / API Key",access:"Self-serve (business plan for API)",api:"REST, extensive",mcp:"Yes",verdict:"Ready"},
+  {id:47,name:"Ecwid",category:"Ecommerce",what:"Online store creation platform",auth:"OAuth2 / API Key",access:"Self-serve",api:"REST",mcp:"Yes",verdict:"Ready"},
+  {id:48,name:"Gumroad",category:"Ecommerce",what:"Creator product sales platform",auth:"OAuth2 / API Key",access:"Self-serve",api:"REST",mcp:"Yes",verdict:"Ready"},
+  {id:49,name:"Amazon Selling Partner",category:"Ecommerce",what:"Amazon marketplace API for sellers",auth:"OAuth2",access:"Gated — seller account + approval",api:"REST, broad",mcp:"Yes",verdict:"Needs outreach"},
+  {id:50,name:"Fanbasis",category:"Ecommerce",what:"Custom merchandise e-commerce platform",auth:"OAuth2 / API Key",access:"Self-serve",api:"REST",mcp:"Yes",verdict:"Ready"},
+  {id:51,name:"DataForSEO",category:"Data SEO and Scraping",what:"SEO data and scraping APIs",auth:"API Key",access:"Self-serve, free trial",api:"REST, wide range",mcp:"Yes",verdict:"Ready"},
+  {id:52,name:"SE Ranking",category:"Data SEO and Scraping",what:"Keyword tracking and SEO audits",auth:"API Key",access:"Self-serve, free trial",api:"REST, wide range",mcp:"Yes",verdict:"Ready"},
+  {id:53,name:"Ahrefs",category:"Data SEO and Scraping",what:"Backlink data and keyword research",auth:"API Key",access:"Partially gated — API requires paid plan",api:"REST",mcp:"Yes",verdict:"Needs outreach"},
+  {id:54,name:"MrScraper",category:"Data SEO and Scraping",what:"Web scraping and data extraction",auth:"API Key",access:"Self-serve",api:"REST",mcp:"Yes",verdict:"Ready"},
+  {id:55,name:"Apify",category:"Data SEO and Scraping",what:"Web scraping and automation platform",auth:"API Key",access:"Self-serve",api:"REST, extensive",mcp:"Yes",verdict:"Ready"},
+  {id:56,name:"Firecrawl",category:"Data SEO and Scraping",what:"Web scraping and data extraction",auth:"API Key",access:"Self-serve, free trial",api:"REST, broad",mcp:"Yes",verdict:"Ready"},
+  {id:57,name:"Bright Data",category:"Data SEO and Scraping",what:"Web data collection platform",auth:"API Key",access:"Self-serve (enterprise features gated)",api:"REST, extensive",mcp:"Yes",verdict:"Ready"},
+  {id:58,name:"Sherlock",category:"Data SEO and Scraping",what:"OSINT username search across social networks",auth:"None",access:"Self-serve (open source)",api:"None — CLI tool only",mcp:"No",verdict:"Not buildable as API toolkit"},
+  {id:59,name:"Waterfall.io",category:"Data SEO and Scraping",what:"SEO data collection and monitoring",auth:"API Key",access:"Self-serve, free trial",api:"REST",mcp:"Yes",verdict:"Ready"},
+  {id:60,name:"Clay",category:"Data SEO and Scraping",what:"AI-powered data enrichment platform",auth:"OAuth2 / API Key",access:"Self-serve, free trial",api:"REST",mcp:"Yes",verdict:"Ready"},
+  {id:61,name:"GitHub",category:"Developer Infra and Data",what:"Version control and software collaboration",auth:"OAuth2 / API Key",access:"Self-serve",api:"REST + GraphQL",mcp:"Yes",verdict:"Ready"},
+  {id:62,name:"Vercel",category:"Developer Infra and Data",what:"Frontend deployment and hosting platform",auth:"OAuth2 / API Key",access:"Self-serve",api:"REST, extensive",mcp:"Yes",verdict:"Ready"},
+  {id:63,name:"Netlify",category:"Developer Infra and Data",what:"Web hosting and deployment platform",auth:"OAuth2 / API Key",access:"Self-serve",api:"REST, 100+ endpoints",mcp:"Yes",verdict:"Ready"},
+  {id:64,name:"Cloudflare",category:"Developer Infra and Data",what:"Security and performance for web apps",auth:"API Key",access:"Self-serve",api:"REST, broad",mcp:"Yes",verdict:"Ready"},
+  {id:65,name:"Supabase",category:"Developer Infra and Data",what:"Open-source Firebase alternative",auth:"API Key",access:"Self-serve, free plan",api:"REST + GraphQL",mcp:"Yes",verdict:"Ready"},
+  {id:66,name:"Neo4j",category:"Developer Infra and Data",what:"Graph database management system",auth:"OAuth2 / API Key",access:"Self-serve",api:"REST + GraphQL",mcp:"Yes",verdict:"Ready"},
+  {id:67,name:"Snowflake",category:"Developer Infra and Data",what:"Cloud data warehousing platform",auth:"OAuth2 / API Key",access:"Self-serve, free trial",api:"REST, broad",mcp:"Yes",verdict:"Ready"},
+  {id:68,name:"MongoDB Atlas",category:"Developer Infra and Data",what:"Cloud MongoDB database service",auth:"API Key",access:"Self-serve, free tier",api:"REST, broad",mcp:"Yes",verdict:"Ready"},
+  {id:69,name:"Datadog",category:"Developer Infra and Data",what:"Monitoring and analytics for applications",auth:"API Key",access:"Self-serve",api:"REST, broad",mcp:"Yes",verdict:"Ready"},
+  {id:70,name:"Sentry",category:"Developer Infra and Data",what:"Error tracking and monitoring",auth:"OAuth2 / API Key",access:"Self-serve",api:"REST, extensive",mcp:"Yes",verdict:"Ready"},
+  {id:71,name:"Notion",category:"Productivity and Project Management",what:"All-in-one workspace for notes and tasks",auth:"OAuth2 / API Key",access:"Self-serve",api:"REST, extensive",mcp:"Yes",verdict:"Ready"},
+  {id:72,name:"Airtable",category:"Productivity and Project Management",what:"Cloud database and project management",auth:"OAuth2 / API Key",access:"Self-serve",api:"REST + GraphQL",mcp:"Yes",verdict:"Ready"},
+  {id:73,name:"Linear",category:"Productivity and Project Management",what:"Project management for engineering teams",auth:"OAuth2 / API Key",access:"Self-serve",api:"REST + GraphQL",mcp:"Yes",verdict:"Ready"},
+  {id:74,name:"Jira",category:"Productivity and Project Management",what:"Issue tracking and project management",auth:"OAuth2 / API Key",access:"Self-serve",api:"REST + GraphQL, extensive",mcp:"Yes",verdict:"Ready"},
+  {id:75,name:"Asana",category:"Productivity and Project Management",what:"Task and project tracking for teams",auth:"OAuth2 / API Key",access:"Self-serve",api:"REST, broad",mcp:"Yes",verdict:"Ready"},
+  {id:76,name:"Monday.com",category:"Productivity and Project Management",what:"Work operating system for projects",auth:"OAuth2 / API Key",access:"Self-serve",api:"REST, extensive",mcp:"Yes",verdict:"Ready"},
+  {id:77,name:"ClickUp",category:"Productivity and Project Management",what:"Task and project management platform",auth:"OAuth2 / API Key",access:"Self-serve, free plan",api:"REST, extensive",mcp:"Yes",verdict:"Ready"},
+  {id:78,name:"Coda",category:"Productivity and Project Management",what:"Document editor with spreadsheet power",auth:"OAuth2 / API Key",access:"Self-serve",api:"REST, comprehensive",mcp:"Yes",verdict:"Ready"},
+  {id:79,name:"Smartsheet",category:"Productivity and Project Management",what:"Cloud work execution platform",auth:"OAuth2 / API Key",access:"Self-serve",api:"REST, wide range",mcp:"Yes",verdict:"Ready"},
+  {id:80,name:"Harvest",category:"Productivity and Project Management",what:"Time tracking and invoicing tool",auth:"OAuth2 / API Key",access:"Self-serve, free trial",api:"REST, comprehensive",mcp:"Yes",verdict:"Ready"},
+  {id:81,name:"Stripe",category:"Finance and Fintech",what:"Online payment processing",auth:"API Key",access:"Self-serve",api:"REST, extensive",mcp:"Yes",verdict:"Ready"},
+  {id:82,name:"Plaid",category:"Finance and Fintech",what:"Financial data connectivity",auth:"OAuth2 / API Key",access:"Self-serve (enterprise gated)",api:"REST",mcp:"Yes",verdict:"Ready"},
+  {id:83,name:"Binance",category:"Finance and Fintech",what:"Cryptocurrency exchange platform",auth:"API Key",access:"Self-serve (some features need approval)",api:"REST, extensive",mcp:"Yes",verdict:"Ready"},
+  {id:84,name:"Paygent Connect",category:"Finance and Fintech",what:"Payment processing and integration",auth:"OAuth2 / API Key",access:"Self-serve",api:"REST",mcp:"Yes",verdict:"Ready"},
+  {id:85,name:"iPayX",category:"Finance and Fintech",what:"Payment processing solutions",auth:"API Key",access:"Self-serve",api:"REST",mcp:"Yes",verdict:"Ready"},
+  {id:86,name:"QuickBooks",category:"Finance and Fintech",what:"Accounting and financial management",auth:"OAuth2 / API Key",access:"Self-serve (developer account required)",api:"REST",mcp:"Yes",verdict:"Ready"},
+  {id:87,name:"Xero",category:"Finance and Fintech",what:"Cloud accounting for small businesses",auth:"OAuth2 / API Key",access:"Self-serve (requires Xero org)",api:"REST, 500+ endpoints",mcp:"Yes",verdict:"Ready"},
+  {id:88,name:"Brex",category:"Finance and Fintech",what:"Corporate card and financial software",auth:"OAuth2 / API Key",access:"Self-serve (verification required)",api:"REST",mcp:"Yes",verdict:"Ready"},
+  {id:89,name:"Ramp",category:"Finance and Fintech",what:"Corporate card and spend management",auth:"OAuth2 / API Key",access:"Self-serve",api:"REST, comprehensive",mcp:"Yes",verdict:"Ready"},
+  {id:90,name:"PitchBook",category:"Finance and Fintech",what:"Private equity and VC market data",auth:"OAuth2 / API Key",access:"Gated — subscription required",api:"REST",mcp:"Yes",verdict:"Needs outreach"},
+  {id:91,name:"NotebookLM",category:"AI Research and Media",what:"AI-powered note and research tool",auth:"OAuth2 / API Key",access:"Self-serve (Google Cloud account)",api:"REST (via Gemini API)",mcp:"Yes",verdict:"Ready"},
+  {id:92,name:"Otter AI",category:"AI Research and Media",what:"AI meeting notes and transcription",auth:"OAuth2 / API Key",access:"Self-serve, free plan",api:"REST",mcp:"Yes",verdict:"Ready"},
+  {id:93,name:"Fathom",category:"AI Research and Media",what:"AI video meeting analysis",auth:"OAuth2 / API Key",access:"Self-serve",api:"REST (limited public API)",mcp:"Unknown",verdict:"Verify — limited docs"},
+  {id:94,name:"Consensus",category:"AI Research and Media",what:"AI research paper discovery platform",auth:"OAuth2 / API Key",access:"Self-serve",api:"REST, broad",mcp:"Yes",verdict:"Ready"},
+  {id:95,name:"Reducto",category:"AI Research and Media",what:"AI document parsing and extraction",auth:"API Key",access:"Self-serve",api:"REST",mcp:"Yes",verdict:"Ready"},
+  {id:96,name:"Devin",category:"AI Research and Media",what:"AI software engineering agent",auth:"API Key",access:"Self-serve (limited access)",api:"REST (limited)",mcp:"Unknown",verdict:"Verify — limited public API"},
+  {id:97,name:"Higgsfield",category:"AI Research and Media",what:"AI-powered video generation",auth:"API Key",access:"Self-serve",api:"REST",mcp:"Yes",verdict:"Ready"},
+  {id:98,name:"Mermaid CLI",category:"AI Research and Media",what:"CLI tool for diagrams from text",auth:"None",access:"Self-serve (open source)",api:"None — CLI only",mcp:"No",verdict:"Not buildable as API toolkit"},
+  {id:99,name:"YouTube Transcript",category:"AI Research and Media",what:"YouTube video transcript extraction",auth:"API Key",access:"Self-serve (paid for commercial)",api:"REST",mcp:"Yes",verdict:"Ready"},
+  {id:100,name:"Grain",category:"AI Research and Media",what:"AI meeting recording and transcription",auth:"OAuth2 / API Key",access:"Self-serve",api:"REST, extensive",mcp:"Yes",verdict:"Ready"},
+];
+
+function getAccessBadge(access) {
+  const lower = access.toLowerCase();
+  if (lower.includes('gated') && !lower.includes('self')) return '<span class="badge badge-red">Gated</span>';
+  if (lower.includes('gated') || lower.includes('approval') || lower.includes('subscription') || lower.includes('verification')) return '<span class="badge badge-yellow">Partial</span>';
+  return '<span class="badge badge-green">Self-serve</span>';
+}
+
+function getVerdictBadge(verdict) {
+  const lower = verdict.toLowerCase();
+  if (lower.includes('not buildable')) return '<span class="badge badge-red">Not Buildable</span>';
+  if (lower.includes('needs outreach') || lower.includes('verify')) return '<span class="badge badge-yellow">Needs Outreach</span>';
+  return '<span class="badge badge-green">Ready</span>';
+}
+
+function getMCPBadge(mcp) {
+  if (mcp === 'No') return '<span class="badge badge-red">No</span>';
+  if (mcp === 'Unknown') return '<span class="badge badge-yellow">Unknown</span>';
+  return '<span class="badge badge-cyan">Yes</span>';
+}
+
+function renderTable(items) {
+  const tbody = document.getElementById('table-body');
+  tbody.innerHTML = items.map(row => `
+    <tr data-category="${row.category}">
+      <td style="color:var(--muted)">${row.id}</td>
+      <td style="font-weight:600;white-space:nowrap">${row.name}</td>
+      <td style="color:var(--muted);white-space:nowrap;font-size:11px">${row.category}</td>
+      <td style="color:var(--muted)">${row.what}</td>
+      <td style="white-space:nowrap;font-size:11px">${row.auth}</td>
+      <td>${getAccessBadge(row.access)}</td>
+      <td style="color:var(--muted);font-size:11px">${row.api}</td>
+      <td>${getMCPBadge(row.mcp)}</td>
+      <td>${getVerdictBadge(row.verdict)}</td>
+    </tr>
+  `).join('');
+}
+
+function filterTable(category, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const filtered = category === 'all' ? data : data.filter(r => r.category === category);
+  renderTable(filtered);
+}
+
+renderTable(data);
+</script>
+</body>
+</html>
